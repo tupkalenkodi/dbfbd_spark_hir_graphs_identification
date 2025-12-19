@@ -1,0 +1,42 @@
+# IntelliJ IDEA
+.idea/
+out/
+
+# Python
+__pycache__/
+
+
+# Virtual Environments
+venv/
+
+
+# Scala
+*.class
+*.log
+
+# sbt specific
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+
+# Data folders (your specific patterns)
+*_output_data/
+*_input_data/
+
+# PDF files (if you don't want to track generated PDFs)
+# Uncomment if you don't want to track PDFs
+*.pdf
+
+# Project specific ignores
+.cache/
+.coverage
+.tox/
+.pytest_cache/
+.mypy_cache/
