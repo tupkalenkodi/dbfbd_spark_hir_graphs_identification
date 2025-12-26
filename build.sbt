@@ -9,16 +9,22 @@ lazy val root = (project in file("."))
     name := "graph-classifier-scala",
 
     libraryDependencies ++= Seq(
-      // Spark dependencies (for Spark-based implementation)
+      // Spark dependencies
       "org.apache.spark" %% "spark-core" % sparkVersion,
       "org.apache.spark" %% "spark-sql" % sparkVersion,
 
-      // Parquet4s - pure Scala Parquet library (replaces Hadoop-based parquet)
+      // GraphFrames for graph processing
+      "io.graphframes" % "graphframes" % "0.10.0-spark4-s_2.13",
+
+      // Parquet4s - pure Scala Parquet library
       "com.github.mjakubowski84" %% "parquet4s-core" % parquet4sVersion,
 
       // Scala parallel collections
       "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4"
     ),
+
+    // Add resolver for GraphFrames
+    resolvers += "Spark Packages Repo" at "https://repos.spark-packages.org/",
 
     // Compiler options
     scalacOptions ++= Seq(

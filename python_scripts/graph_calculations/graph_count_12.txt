@@ -1,1 +1,1 @@
-n=12, edges=21, max_degree=6, count=149781334
+n=12, edges=21, max_degree=6, count=149_781_334

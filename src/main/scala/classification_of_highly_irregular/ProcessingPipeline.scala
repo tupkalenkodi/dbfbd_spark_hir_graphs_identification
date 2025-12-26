@@ -13,7 +13,7 @@ object ProcessingPipeline {
 
   // Main method
   def main(args: Array[String]): Unit = {
-    val inputData = "data/chi/input_data/scaling_factor=1"
+    val inputData = "data/chi/input_data"
     val sparkOutputDir = "data/chi/output_data/spark/scaling_factor=1"
     val simpleOutputDir = "data/chi/output_data/simple/scaling_factor=1"
 

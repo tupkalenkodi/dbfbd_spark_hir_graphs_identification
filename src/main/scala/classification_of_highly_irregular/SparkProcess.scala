@@ -9,7 +9,6 @@ import java.nio.file.{Files, Paths}
 
 object SparkProcess {
 
-  import SparkSessionFactory.createOptimizedSession
   import Utilities.isHighlyIrregular
   import Utilities.deleteDirectory
 

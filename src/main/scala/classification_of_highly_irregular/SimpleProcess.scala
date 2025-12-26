@@ -88,12 +88,6 @@ object SimpleProcess {
     ParquetWriter.of[HighlyIrregularGraph].writeAndClose(Path(outputFile), allGraphs)
   }
 
-  // Get optimal number of parallel workers
-  private def getOptimalWorkers: Int = {
-    val availableProcessors = Runtime.getRuntime.availableProcessors()
-    Math.max(1, availableProcessors - 1)
-  }
-
   // Main classification function
   def classifyGraphs(inputDir: String, outputDir: String): Unit = {
     println()
@@ -102,8 +96,6 @@ object SimpleProcess {
 
     // Find all parquet files
     val parquetFiles = findParquetFiles(inputDir)
-
-    val nWorkers = getOptimalWorkers
 
     println("Processing graphs...")
 

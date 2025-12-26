@@ -27,8 +27,7 @@ project/plugins/project/
 .worksheet
 
 # Data folders (your specific patterns)
-*_output_data/
-data/_input_data/
+data/
 
 # PDF files (if you don't want to track generated PDFs)
 # Uncomment if you don't want to track PDFs
