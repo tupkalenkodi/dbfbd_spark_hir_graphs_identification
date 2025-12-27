@@ -1,4 +1,4 @@
-package classification_of_highly_irregular
+package classification
 
 import java.io.File
 import scala.collection.mutable.ArrayBuffer
@@ -30,7 +30,7 @@ object Utilities {
   }
 
   // Parse edges from string format "a1,b1;a2,b2;..."
-  private def parseEdges(edgesStr: String): Seq[Seq[Int]] = {
+   def parseEdges(edgesStr: String): Seq[Seq[Int]] = {
     if (edgesStr == null || edgesStr.isEmpty) {
       return Seq.empty
     }

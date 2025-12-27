@@ -1,4 +1,4 @@
-package classification_of_highly_irregular
+package classification
 
 import com.github.mjakubowski84.parquet4s.{ParquetReader, ParquetWriter, Path}
 import java.io.File

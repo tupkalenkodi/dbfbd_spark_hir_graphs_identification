@@ -1,4 +1,4 @@
-package classification_of_highly_irregular
+package classification
 
 import com.sun.management.OperatingSystemMXBean
 import org.apache.spark.SparkConf

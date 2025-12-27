@@ -18,6 +18,6 @@ def visualize_graph6(graph6_string):
     plt.show()
 
 if __name__ == "__main__":
-    graph6 = "H?C@IQD"
+    graph6 = "I???pHG`G"
 
     visualize_graph6(graph6)
