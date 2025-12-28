@@ -1,4 +1,4 @@
-package classification
+package classification2
 
 import com.sun.management.OperatingSystemMXBean
 import org.apache.spark.SparkConf

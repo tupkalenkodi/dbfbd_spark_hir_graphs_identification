@@ -1,10 +1,10 @@
-package classification
+package main
 
 import com.sun.management.OperatingSystemMXBean
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
-
 import java.lang.management.ManagementFactory
+import java.nio.file.{Files, Paths}
 
 
 object SparkSessionFactory {
@@ -72,6 +72,17 @@ object SparkSessionFactory {
 
     // Set log level
     spark.sparkContext.setLogLevel("ERROR")
+
+    // Setup checkpoint directory for GraphFrames and iterative algorithms
+    val checkpointDir = "/tmp/spark-checkpoint"
+    val checkpointPath = Paths.get(checkpointDir)
+
+    // Create checkpoint directory if it doesn't exist
+    if (!Files.exists(checkpointPath)) {
+      Files.createDirectories(checkpointPath)
+    }
+
+    spark.sparkContext.setCheckpointDir(checkpointDir)
 
     spark
   }

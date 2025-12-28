@@ -1,4 +1,4 @@
-package classification
+package main
 
 import java.io.File
 import scala.collection.mutable.ArrayBuffer

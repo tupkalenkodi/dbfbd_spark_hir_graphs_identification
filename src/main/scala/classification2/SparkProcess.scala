@@ -1,10 +1,8 @@
-package classification
+package classification2
 
 import org.apache.spark.sql.functions.{col, udf, explode, lit, concat}
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.SparkSession
-import org.graphframes.GraphFrame
-
 import java.nio.file.{Files, Paths}
 
 

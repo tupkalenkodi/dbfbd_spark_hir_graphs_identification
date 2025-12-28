@@ -1,4 +1,4 @@
-package classification
+package classification2
 
 import com.github.mjakubowski84.parquet4s.{ParquetReader, Path}
 import org.apache.spark.sql.SparkSession
