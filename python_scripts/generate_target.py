@@ -4,7 +4,40 @@ import pyarrow.parquet as pq
 from pathlib import Path
 import random
 import shutil
+import matplotlib.pyplot as plt
 
+def visualize_graph(graph, output_dir):
+    plt.figure(figsize=(12, 10))
+
+    # Choose layout
+    # For small graphs (< 100 nodes), spring layout works well
+    if graph.number_of_nodes() < 100:
+        pos = nx.spring_layout(graph, k=0.5, iterations=50, seed=42)
+    else:
+        # For larger graphs, use kamada_kawai
+        pos = nx.kamada_kawai_layout(graph)
+
+    # Draw the graph
+    nx.draw_networkx_nodes(graph, pos,
+                           node_color='lightblue',
+                           node_size=500,
+                           alpha=0.9)
+
+    nx.draw_networkx_edges(graph, pos,
+                           width=1.5,
+                           alpha=0.6,
+                           edge_color='gray')
+
+    nx.draw_networkx_labels(graph, pos,
+                            font_size=10,
+                            font_weight='bold')
+
+    plt.title(f"Graph with {graph.number_of_nodes()} nodes and {graph.number_of_edges()} edges")
+    plt.axis('off')
+    plt.tight_layout()
+
+    # Optionally display
+    plt.show()
 
 def setup_output_directory(output_dir):
     if output_dir.exists():
@@ -127,9 +160,9 @@ def main():
     output_dir = setup_output_directory(output_dir)
 
     # Multi-component options
-    num_components = 5
+    num_components = 1
     # Set to [20, 30, 40] for specific sizes, or None for random
-    component_sizes = None
+    component_sizes = [30]
 
     # Graph type: 'erdos_renyi', 'barabasi_albert', 'watts_strogatz',
     #             'random_regular', 'powerlaw_cluster', 'complete', 'cycle'
@@ -158,6 +191,9 @@ def main():
 
     # Save to Parquet
     save_to_parquet(graph, output_dir)
+
+    # Add visualization
+    # visualize_graph(graph, output_dir)
 
     print("=" * 70)
     print("GENERATION COMPLETE!")
