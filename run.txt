@@ -1,0 +1,82 @@
+#!/bin/bash
+
+# Build and copy JAR
+sbt clean assembly
+cp target/scala-2.12/graph-classifier.jar /srv/spark-jars/
+
+# Set master container name
+MASTER="spark-master"
+
+# Optimized configuration for your cluster:
+# Linux worker:   6 cores, 6G memory
+# Windows worker: 2 cores, 8G memory
+# Total:          8 cores, 14G memory
+
+docker exec $MASTER /opt/spark/bin/spark-submit \
+  --master spark://192.168.0.107:7077 \
+  --deploy-mode client \
+  --class "main.ClassificationSparkProcess" \
+  \
+  `# Memory Configuration` \
+  --driver-memory 2G \
+  --executor-memory 5G \
+  \
+  `# Core Configuration - match your worker setup` \
+  --total-executor-cores 8 \
+  --executor-cores 2 \
+  \
+  `# Parallelism - 2-3x number of cores` \
+  --conf spark.default.parallelism=16 \
+  --conf spark.sql.shuffle.partitions=16 \
+  \
+  `# Memory Management` \
+  --conf spark.memory.fraction=0.8 \
+  --conf spark.memory.storageFraction=0.3 \
+  \
+  `# Network & Shuffle Optimization` \
+  --conf spark.network.timeout=600s \
+  --conf spark.executor.heartbeatInterval=60s \
+  --conf spark.sql.adaptive.enabled=true \
+  --conf spark.sql.adaptive.coalescePartitions.enabled=true \
+  --conf spark.sql.adaptive.skewJoin.enabled=true \
+  \
+  `# Broadcast & Autotune` \
+  --conf spark.sql.autoBroadcastJoinThreshold=10485760 \
+  --conf spark.sql.files.maxPartitionBytes=134217728 \
+  \
+  `# Serialization` \
+  --conf spark.serializer=org.apache.spark.serializer.KryoSerializer \
+  --conf spark.kryoserializer.buffer.max=512m \
+  \
+  `# Parquet Optimization` \
+  --conf spark.sql.parquet.enableVectorizedReader=true \
+  --conf spark.sql.parquet.columnarReaderBatchSize=4096 \
+  --conf spark.sql.parquet.compression.codec=snappy \
+  \
+  `# UI and Logging` \
+  --conf spark.ui.port=4040 \
+  --conf spark.eventLog.enabled=true \
+  --conf spark.eventLog.dir=/tmp/spark-events \
+  \
+  /jars/graph-classifier.jar
+
+# Alternative: Maximum resource utilization (aggressive)
+# Uncomment this section and comment out the above if you want to push limits
+<<'AGGRESSIVE_CONFIG'
+docker exec $MASTER /opt/spark/bin/spark-submit \
+  --master spark://192.168.0.107:7077 \
+  --deploy-mode client \
+  --class "main.ClassificationSparkProcess" \
+  --driver-memory 2G \
+  --executor-memory 6G \
+  --total-executor-cores 8 \
+  --executor-cores 2 \
+  --conf spark.default.parallelism=24 \
+  --conf spark.sql.shuffle.partitions=24 \
+  --conf spark.memory.fraction=0.9 \
+  --conf spark.memory.storageFraction=0.2 \
+  --conf spark.network.timeout=800s \
+  --conf spark.sql.adaptive.enabled=true \
+  --conf spark.serializer=org.apache.spark.serializer.KryoSerializer \
+  /jars/graph-classifier.jar
+AGGRESSIVE_CONFIG

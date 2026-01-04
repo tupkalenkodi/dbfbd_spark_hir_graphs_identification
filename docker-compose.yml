@@ -16,6 +16,7 @@ services:
     volumes:
       - spark-data-volume:/data
       - spark-jars-volume:/jars
+      - ./timing_results:/timing_results
     environment:
       - SPARK_MASTER_IP=192.168.0.107
     networks:
@@ -32,6 +33,7 @@ services:
     volumes:
       - spark-data-volume:/data
       - spark-jars-volume:/jars
+      - ./timing_results:/timing_results
     environment:
       - SPARK_WORKER_CORES=6
       - SPARK_WORKER_MEMORY=6G
