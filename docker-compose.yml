@@ -16,7 +16,7 @@ services:
     volumes:
       - spark-data-volume:/data
       - spark-jars-volume:/jars
-      - ./timing_results:/timing_results
+      # REMOVE the bind mount line
     environment:
       - SPARK_MASTER_IP=192.168.0.107
     networks:
@@ -33,7 +33,7 @@ services:
     volumes:
       - spark-data-volume:/data
       - spark-jars-volume:/jars
-      - ./timing_results:/timing_results
+      # REMOVE the bind mount line
     environment:
       - SPARK_WORKER_CORES=6
       - SPARK_WORKER_MEMORY=6G
@@ -53,7 +53,7 @@ services:
     volumes:
       - spark-data-volume:/data
       - spark-jars-volume:/jars
-      - ./timing_results:/timing_results
+      # REMOVE the bind mount line
     environment:
       - SPARK_WORKER_CORES=2
       - SPARK_WORKER_MEMORY=8G

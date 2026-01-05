@@ -38,8 +38,8 @@ docker exec $MASTER /opt/spark/bin/spark-submit \
   --deploy-mode client \
   --class "main.ClassificationSparkProcess" \
   --driver-memory 2G \
-  --executor-memory 500M \
-  --executor-cores 1 \
+  --executor-memory 4G \
+  --executor-cores 2 \
   --conf spark.default.parallelism=16 \
   /jars/graph-classifier.jar $N $WORKERS
 

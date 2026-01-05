@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-01-05_04-49-13",
+  "order": 12,
+  "target_label": "large",
+  "cluster_config": {
+    "num_workers": 2
+  },
+  "results": {
+    "matches_found": 429
+  },
+  "timings": {
+    "load_target_and_checkpoint": 0.252119468,
+    "total_time": 597.798641715,
+    "spark_session_creation": 2.949763255,
+    "spark_session_shutdown": 0.116684264,
+    "identification_process_total": 594.73208206,
+    "load_patterns": 36.657569567,
+    "save_matches_parquet": 0.527068301,
+    "connected_components_count": 113.331516956,
+    "isomorphism_matching_total": 443.936415879
+  },
+  "total_time_seconds": 597.798641715
+}

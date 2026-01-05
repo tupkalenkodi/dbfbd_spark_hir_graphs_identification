@@ -166,15 +166,15 @@ def main():
 
     # Directory at the project root:
     project_root = script_dir.parent
-    output_dir = project_root / "data" / "target"
+    output_dir = project_root / "data" / "target" / "large"
 
     # Setup output directory
     output_dir = setup_output_directory(output_dir)
 
     # Multi-component options
-    num_components = 100
+    num_components = 5
     # Set to [20, 30, 40] for specific sizes, or None for random
-    component_sizes_mean_sd = (1000, 10)
+    component_sizes_mean_sd = (100, 10)
 
     # Graph type: 'erdos_renyi', 'barabasi_albert', 'watts_strogatz',
     #             'random_regular', 'powerlaw_cluster', 'complete', 'cycle'

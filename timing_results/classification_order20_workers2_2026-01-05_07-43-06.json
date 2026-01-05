@@ -1,0 +1,23 @@
+{
+  "timestamp": "2026-01-05_07-43-06",
+  "order": 20,
+  "cluster_config": {
+    "num_workers": 2
+  },
+  "results": {
+    "graphs_found": 55
+  },
+  "timings": {
+    "read_parquet": 4.348114867,
+    "total_time": 192.772660432,
+    "spark_session_creation": 3.916261166,
+    "distributed_prepare_vertices": 0.067492476,
+    "spark_session_shutdown": 0.159125385,
+    "write_edges": 0.903681333,
+    "distributed_prepare_edges": 0.052027264,
+    "classification_and_count": 181.671671575,
+    "classification_process_total": 188.697098122,
+    "write_vertices": 1.616530673
+  },
+  "total_time_seconds": 192.772660432
+}

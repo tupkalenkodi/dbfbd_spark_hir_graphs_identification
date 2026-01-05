@@ -12,12 +12,21 @@ fi
 
 N=$1
 
+WORKERS=${2:-0}
+
 echo "Building JAR..."
 sbt clean assembly
 cp target/scala-2.12/graph-classifier.jar /srv/spark-jars/
 
 # Set master container name
 MASTER=$(docker ps --filter "name=spark-master" --format "{{.ID}}")
+
+if [ -z "$MASTER" ]; then
+    echo "ERROR: Spark master container not found!"
+    echo "Make sure your Docker Swarm cluster is running:"
+    echo "  docker stack ps spark"
+    exit 1
+fi
 
 echo "Running classification for n=$N..."
 
@@ -26,24 +35,16 @@ echo "Running classification for n=$N..."
 # Windows worker: 2 cores, 8G memory
 # Total:          8 cores, 14G memory
 
-
-# Maximum resource utilization (aggressive)
+# MINIMAL CONFIGURATION FOR OPTIMAL CORE USAGE
+# MINIMAL CONFIGURATION FOR OPTIMAL CORE USAGE
 docker exec $MASTER /opt/spark/bin/spark-submit \
   --master spark://192.168.0.107:7077 \
   --deploy-mode client \
   --class "main.ClassificationSparkProcess" \
   --driver-memory 2G \
-  --executor-memory 6G \
-  --total-executor-cores 8 \
+  --executor-memory 1500M \
   --executor-cores 2 \
-  --num-executors 4 \
-  --conf spark.default.parallelism=24 \
-  --conf spark.sql.shuffle.partitions=24 \
-  --conf spark.memory.fraction=0.9 \
-  --conf spark.memory.storageFraction=0.2 \
-  --conf spark.network.timeout=800s \
-  --conf spark.sql.adaptive.enabled=true \
-  --conf spark.serializer=org.apache.spark.serializer.KryoSerializer \
-  /jars/graph-classifier.jar $N  # Pass n as argument
+  --conf spark.default.parallelism=16 \
+  /jars/graph-classifier.jar $N $WORKERS
 
 echo "Classification for n=$N completed!"
